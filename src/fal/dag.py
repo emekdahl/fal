@@ -103,13 +103,14 @@ class ScriptGraphBuilder:
 
 
 class ScriptGraph:
-    def __init__(self, models: List[DbtModel], keyword: str, root: str, _graph=[]):
-        self.outgoing: Dict[FalScript, List[FalScript]] = {}
-        self.incoming: Dict[FalScript, List[FalScript]] = {}
-        self.ordered_list: List[FalScript] = []
+    graph: List[FalScript]
+    outgoing: Dict[FalScript, List[FalScript]] = {}
+    incoming: Dict[FalScript, List[FalScript]] = {}
+    ordered_list: List[FalScript] = []
 
-        if _graph:
-            self.graph = _graph
+    def __init__(self, models: List[DbtModel], keyword: str, root: str, graph=[]):
+        if graph:
+            self.graph = graph
         else:
             self.graph = ScriptGraphBuilder(models, keyword, root).get_values()
         self.incoming = dict(
